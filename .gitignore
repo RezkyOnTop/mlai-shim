@@ -1,0 +1,25 @@
+# Runtime / generated
+*.log
+*.pid
+scratch/
+.mlai/
+.mlai-shim/
+node_modules/
+__pycache__/
+*.py[cod]
+
+# Secrets — never commit
+.env
+.env.*
+auth.json
+.device-token
+*token*
+*secret*
+*.key
+*.pem
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

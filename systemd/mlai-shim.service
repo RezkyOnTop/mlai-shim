@@ -1,0 +1,24 @@
+[Unit]
+Description=mlai-shim (OpenAI-compatible bridge for ML AI Code)
+After=network-online.target mlai-daemon.service
+Wants=network-online.target
+Requires=mlai-daemon.service
+
+[Service]
+Type=simple
+User=ubuntu
+Environment=PATH=%h/.npm-global/bin:/usr/local/bin:/usr/bin:/bin
+Environment=MLAI_SHIM_PORT=8787
+Environment=MLAI_SOCKET=%h/.mlai-shim/daemon.sock
+Environment=MLAI_SHIM_TIER=fast
+Environment=MLAI_SHIM_MAX_PROMPT=6000
+Environment=MLAI_SHIM_MAX_QUEUE=16
+WorkingDirectory=%h/mlai-shim
+ExecStart=/usr/bin/python3 %h/mlai-shim/shim_v4.py
+Restart=always
+RestartSec=3
+StandardOutput=append:%h/mlai-shim/shim.log
+StandardError=append:%h/mlai-shim/shim.log
+
+[Install]
+WantedBy=multi-user.target

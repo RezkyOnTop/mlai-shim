@@ -1,0 +1,10 @@
+[Unit]
+Description=mlai-shim health check
+
+[Service]
+Type=oneshot
+User=ubuntu
+# Only act when the shim stops answering at all. A busy daemon reports
+# "daemon": false while it works through the queue, and restarting on that
+# would kill requests that are already in flight.
+ExecStart=/bin/bash -c 'curl -fsS -m 15 http://127.0.0.1:8787/health > /tmp/mlai-health.json || (echo "shim not answering, restarting"; sudo /bin/systemctl restart mlai-daemon mlai-shim)'

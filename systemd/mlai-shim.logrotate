@@ -1,0 +1,11 @@
+%h/mlai-shim/*.log {
+    su ubuntu ubuntu
+    weekly
+    rotate 4
+    maxsize 10M
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}

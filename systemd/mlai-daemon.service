@@ -1,0 +1,23 @@
+[Unit]
+Description=mlai daemon (ML AI Code local engine socket)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Environment=PATH=%h/.npm-global/bin:/usr/local/bin:/usr/bin:/bin
+Environment=MLAI_SOCKET=%h/.mlai-shim/daemon.sock
+Environment=MLAI_NO_UPDATE_CHECK=1
+RuntimeDirectory=mlai-shim
+RuntimeDirectoryMode=0750
+WorkingDirectory=%h/mlai-shim/scratch
+ExecStartPre=/bin/mkdir -p %h/.mlai-shim
+ExecStart=%h/.npm-global/bin/mlai serve
+Restart=always
+RestartSec=5
+StandardOutput=append:%h/mlai-shim/daemon.log
+StandardError=append:%h/mlai-shim/daemon.log
+
+[Install]
+WantedBy=multi-user.target
